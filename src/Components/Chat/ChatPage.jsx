@@ -15,7 +15,17 @@ export default function ChatPage() {
     const fetchHistory = async () => {
       try {
         const history = await invoiceService.getChatHistory();
-        setMessages(history);
+
+        // Aplanamos el historial para que cada pregunta y respuesta sea un mensaje individual
+        const flattenedHistory = [];
+        history.forEach((item) => {
+          if (item.mensaje)
+            flattenedHistory.push({ texto: item.mensaje, esUsuario: true });
+          if (item.respuesta)
+            flattenedHistory.push({ texto: item.respuesta, esUsuario: false });
+        });
+
+        setMessages(flattenedHistory);
       } catch (error) {
         console.error("Error fetching chat history:", error);
       }
@@ -30,14 +40,18 @@ export default function ChatPage() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { mensaje: input, rol: "USER", respuesta: null };
+    // 1. Agregamos el mensaje del usuario al chat
+    const userMessage = { texto: input, esUsuario: true };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
       const response = await invoiceService.sendMessage(input);
-      setMessages((prev) => [...prev, response]);
+
+      // 2. Agregamos la respuesta de la IA como un nuevo mensaje independiente
+      const botMessage = { texto: response.respuesta, esUsuario: false };
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
       alert("Error al enviar mensaje");
@@ -58,19 +72,15 @@ export default function ChatPage() {
       <div className="chat-messages">
         {messages.length === 0 ? (
           <div className="chat-empty">
-            <p>Hola! Soy tu asistente fiscal. Puedo ayudarte con:</p>
-            <ul>
-              <li>Cálculo de IVA y retenciones</li>
-              <li>Categorías monotributistas</li>
-              <li>Preguntas sobre impuestos</li>
-            </ul>
+            <p>¡Hola! Soy tu asistente fiscal...</p>
           </div>
         ) : (
           messages.map((msg, idx) => (
-            <div key={idx} className={`message ${msg.rol.toLowerCase()}`}>
-              <div className="message-content">
-                {msg.rol === "USER" ? msg.mensaje : msg.respuesta}
-              </div>
+            <div
+              key={idx}
+              className={`message ${msg.esUsuario ? "user" : "assistant"}`}
+            >
+              <div className="message-content">{msg.texto}</div>
             </div>
           ))
         )}
