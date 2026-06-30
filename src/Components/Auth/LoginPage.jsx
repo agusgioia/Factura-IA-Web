@@ -28,11 +28,14 @@ export default function LoginPage() {
         <div className="login-box">
           <h1>📊 Factura IA</h1>
           <p>Asistente inteligente de facturación</p>
+
           <GoogleLogin
             onSuccess={handleSuccess}
             onError={handleError}
+            type="standard"
+            theme="outline"
+            size="large"
             text="signin_with"
-            width="300"
           />
         </div>
       </div>
