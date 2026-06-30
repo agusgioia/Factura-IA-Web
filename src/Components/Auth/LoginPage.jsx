@@ -1,6 +1,6 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import authService from "../../services/authService";
+import authService from "../../Services/AuthService";
 import "./LoginPage.css";
 
 export default function LoginPage() {
