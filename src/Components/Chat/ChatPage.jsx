@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import invoiceService from "../../services/invoiceService";
+import invoiceService from "../../Services/InvoiceService";
 import { Send, ArrowLeft } from "lucide-react";
 import "./ChatPage.css";
 
