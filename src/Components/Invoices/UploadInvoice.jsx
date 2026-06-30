@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import invoiceService from "../../services/invoiceService";
+import invoiceService from "../../Services/InvoiceService";
 import { Upload, ArrowLeft } from "lucide-react";
 import "./UploadInvoice.css";
 
