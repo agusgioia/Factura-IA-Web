@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./components/Auth/LoginPage";
-import Dashboard from "./components/Dashboard/Dashboard";
-import InvoicesPage from "./components/Invoices/InvoicesPage";
-import UploadInvoice from "./components/Invoices/UploadInvoice";
-import ChatPage from "./components/Chat/ChatPage";
-import authService from "./services/authService";
+import LoginPage from "./Components/Auth/LoginPage";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import InvoicesPage from "./Components/Invoices/InvoicesPage";
+import UploadInvoice from "./Components/Invoices/UploadInvoice";
+import ChatPage from "./Components/Chat/ChatPage";
+import authService from "./Services/AuthService";
 
 function PrivateRoute({ children }) {
   return authService.isAuthenticated() ? children : <Navigate to="/" />;
