@@ -1,12 +1,10 @@
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import authService from "../../Services/AuthService";
 import "./LoginPage.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
   const handleSuccess = async (credentialResponse) => {
     try {
       const idToken = credentialResponse.credential;
@@ -23,22 +21,20 @@ export default function LoginPage() {
   };
 
   return (
-    <GoogleOAuthProvider clientId={googleClientId}>
-      <div className="login-container">
-        <div className="login-box">
-          <h1>📊 Factura IA</h1>
-          <p>Asistente inteligente de facturación</p>
+    <div className="login-container">
+      <div className="login-box">
+        <h1>📊 Factura IA</h1>
+        <p>Asistente inteligente de facturación</p>
 
-          <GoogleLogin
-            onSuccess={handleSuccess}
-            onError={handleError}
-            type="standard"
-            theme="outline"
-            size="large"
-            text="signin_with"
-          />
-        </div>
+        <GoogleLogin
+          onSuccess={handleSuccess}
+          onError={handleError}
+          type="standard"
+          theme="outline"
+          size="large"
+          text="signin_with"
+        />
       </div>
-    </GoogleOAuthProvider>
+    </div>
   );
 }
